@@ -97,32 +97,21 @@ public class TarefasDAO {
 	}
 	
 	public ArrayList<Tarefa> listarTarefas(int idUsuario, String sql, int limite, int offset) {
-		switch (sql) {
-			case "todas":
-				sql = "SELECT * FROM tarefas " 
-						+"WHERE tarefas_usuario='"+ idUsuario +"' "
-						+"ORDER BY tarefas_dia, tarefas_hora ASC "
-						+"LIMIT "+ limite +" OFFSET "+ offset;
-				break;
-			case "pendentes":
-				sql = "SELECT * FROM tarefas "
-					+"WHERE tarefas_usuario='"+ idUsuario +"' "
-					+"AND tarefas_terminada='0' "
-					+"ORDER BY tarefas_dia ASC, tarefas_hora ASC "
-					+"LIMIT "+ limite +" OFFSET "+ offset;
-				break;
-			case "concluidas":
-				sql = "SELECT * FROM tarefas "
-						+"WHERE tarefas_usuario='"+ idUsuario +"' "
-						+"AND tarefas_terminada='1' "
-						+"ORDER BY tarefas_dia ASC, tarefas_hora ASC "
-						+"LIMIT "+ limite +" OFFSET "+ offset;
-				break;
-		}
+		StringBuilder consulta = new StringBuilder();
+		consulta.append("SELECT * FROM tarefas ")
+		.append("WHERE tarefas_usuario='"+ idUsuario +"' ");
+		
+		if (sql == "pendentes")
+			consulta.append("AND tarefas_terminada='0' ");
+		else if (sql == "concluidas")
+			consulta.append("AND tarefas_terminada='1' ");
+			 
+			consulta.append("ORDER BY tarefas_dia, tarefas_hora ASC ")
+			.append("LIMIT "+ limite +" OFFSET "+ offset);
 		
 		try {
 			statement = conexao.createStatement();
-			resultSet = statement.executeQuery(sql);
+			resultSet = statement.executeQuery(consulta.toString());
 			while (resultSet.next()) {
 				Tarefa tarefa = new Tarefa();
 				tarefa.setId(resultSet.getInt("tarefas_id"));

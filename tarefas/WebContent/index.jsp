@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<jsp:include page="./header.jsp"></jsp:include>
+	<jsp:include page="./elementos/header.jsp"></jsp:include>
 	<title>Tarefas a fazer</title>
 </head>
 
@@ -15,7 +15,7 @@
 <body class="d-flex flex-column text-muted">
 	<div id="conteudo">
 		<!-- navbar -->
-		<%@include file="navbar.jsp"%>
+		<%@include file="./elementos/navbar.jsp"%>
 		<!-- páginas -->
 		<div class="container-fluid">
 			<div class="row justify-content-center">
@@ -26,11 +26,11 @@
 			
 			
 				<% if(escolherJsp == "login") { %>
-					<%@include file="login.jsp"%>
+					<%@include file="./paginas/login.jsp"%>
 				<% } else if(escolherJsp == "listarTarefas") { %>
-					<%@include file="listarTarefas.jsp"%>
+					<%@include file="./paginas/listarTarefas.jsp"%>
 				<% } else if(escolherJsp == "alterarSenha") { %>
-					<%@include file="alterarSenha.jsp"%>
+					<%@include file="./paginas/alterarSenha.jsp"%>
 				<% } %>
 				
 				
@@ -41,7 +41,7 @@
 	</div>
 	<%@include file="modalCadastro.jsp"%>
 	<%@include file="modalTarefa.jsp"%>
-	<jsp:include page="footer.jsp"></jsp:include>
+	<jsp:include page="./elementos/footer.jsp"></jsp:include>
 </body>
 
 </html>
